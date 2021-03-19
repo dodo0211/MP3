@@ -15,7 +15,7 @@ public class MusicData {
     private int playCount;
     private int liked;
 
-    public MusicData(){
+    public MusicData(String id, String artist, String title, String albumArt, String duration){
 
     }
 

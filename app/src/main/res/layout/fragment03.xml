@@ -11,7 +11,7 @@
         android:orientation="vertical">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerLike"
+            android:id="@+id/recyclerList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/pink"/>
@@ -23,7 +23,7 @@
             android:layout_centerInParent="true"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="좋아용 재생목록-3페이지"
+            android:text="페이지재생목록-3페이지"
             android:textColor="@android:color/white"
             android:textSize="20sp"
             android:textStyle="bold" />

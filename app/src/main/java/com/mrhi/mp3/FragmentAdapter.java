@@ -5,6 +5,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import com.mrhi.mp3.FragmentFirst;
+import com.mrhi.mp3.FragmentFourth;
+import com.mrhi.mp3.FragmentSecond;
+import com.mrhi.mp3.FragmentThird;
+
 
 public class FragmentAdapter extends FragmentStateAdapter {
     private int count;
