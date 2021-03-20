@@ -38,12 +38,12 @@ public class MainActivity extends AppCompatActivity {
     
     //////////////////////////////////////////////////////////////////////////////////////////
 
-    //activity_fragment01
-    private RecyclerView recyclerMelon;
-    //activity_fragment02
-    private RecyclerView recyclerLike;
-    //activity_fragment03
-    private RecyclerView recyclerList;
+//    //activity_fragment01
+//    private RecyclerView recyclerMelon;
+//    //activity_fragment02
+//    private RecyclerView recyclerLike;
+//    //activity_fragment03
+//    private RecyclerView recyclerList;
 
     private ImageButton ibPlay, ibPause;
     private Button ibStop;
@@ -119,32 +119,32 @@ public class MainActivity extends AppCompatActivity {
 
         findViewByIdFunc();
 
-        findContentProviderMP3ToArrayList();
 
-        musicAdapter = new MusicAdapter(getApplicationContext(), sdCardList);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
 
-        recyclerList.setLayoutManager(linearLayoutManager);
-        recyclerList.setAdapter(musicAdapter);
 
-        musicAdapter.setOnItemClickListener(new MusicAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                if (ibPlay.isEnabled() == true) {
-                    selectPosition = position;
-                    ibPlay.setEnabled(true);
-                    ibStop.setEnabled(false);
-                    ibPause.setEnabled(false);
 
-//                    tvMP3.setText("선택된 음악" + sdCardList.get(position).getTitle());
-                } else {
-                    Toast.makeText(MainActivity.this, "노래중지하고 선택요망", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });//end of setOnItemClickListener
+
+
+
+
+//        musicAdapter.setOnItemClickListener(new MusicAdapter.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(View view, int position) {
+//                if (ibPlay.isEnabled() == true) {
+//                    selectPosition = position;
+//                    ibPlay.setEnabled(true);
+//                    ibStop.setEnabled(false);
+//                    ibPause.setEnabled(false);
+//
+////                    tvMP3.setText("선택된 음악" + sdCardList.get(position).getTitle());
+//                } else {
+//                    Toast.makeText(MainActivity.this, "노래중지하고 선택요망", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });//end of setOnItemClickListener
 
         //음악을 선택하지 않으면 기본적으로 position이 0
-        selectPosition = 0;
+//        selectPosition = 0;
 //        ibPlay.setEnabled(true);
 //        ibStop.setEnabled(false);
 //        ibPause.setEnabled(false);
@@ -253,36 +253,10 @@ public class MainActivity extends AppCompatActivity {
 
     }//end of onCreate
 
-    private void findContentProviderMP3ToArrayList() {
-        // 컨텐트프로바이더에서는 핸드폰에서 다운로드했던 음악파일은 모두 관리되고 있다.
-        String[] data = {
-                //이름은 우리가 정하는 것이 아니라 정보의 이름으로 이미 정해져있는것
-                MediaStore.Audio.Media._ID,
-                MediaStore.Audio.Media.ARTIST,
-                MediaStore.Audio.Media.TITLE,
-                MediaStore.Audio.Media.ALBUM_ID,
-                MediaStore.Audio.Media.DURATION};
 
-        // 전체 영역에서 음악파일 가져온다.
-        Cursor cursor = getApplicationContext().getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-                data, null, null, data[2] + " ASC");    // Cursor타입이 반환됨, 원하는 정보를 찾아줌
-        // data가 내가 보고 싶은 항목, 그리고 TITLE 항목으로 오름차순으로 가져와라
-        if (cursor != null) {
-            while (cursor.moveToNext()) {
-                String id = cursor.getString(cursor.getColumnIndex(data[0]));
-                String artist = cursor.getString(cursor.getColumnIndex(data[1]));
-                String title = cursor.getString(cursor.getColumnIndex(data[2]));
-                String albumArt = cursor.getString(cursor.getColumnIndex(data[3]));
-                String duration = cursor.getString(cursor.getColumnIndex(data[4]));
-
-                MusicData musicData = new MusicData(id, artist, title, albumArt, duration);
-                sdCardList.add(musicData);
-            }   // end of while
-        }//end of if
-    }//end of findContentProviderMP3ToArrayList
 
     private void findViewByIdFunc() {
-        recyclerList = findViewById(R.id.recyclerList);
+//        recyclerList = findViewById(R.id.recyclerList);
         ibPause = findViewById(R.id.ibPause);
         ibPlay = findViewById(R.id.ibPlay);
         ibStop = findViewById(R.id.ibStop);

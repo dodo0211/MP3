@@ -54,15 +54,25 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.CustomViewHo
         SimpleDateFormat sdf = new SimpleDateFormat("mm:ss");
 
         //앨범자켓을 비트맵으로 만들기
-        Bitmap albumImg = getAlbumImg(context, Integer.parseInt(musicList.get(position).getAlbumArt()), 200);
-        if(albumImg != null){
-            customViewHolder.albumArt.setImageBitmap(albumImg);
+        if(musicList.get(position).getAlbumArt() != null){
+            Bitmap albumImg = getAlbumImg(context, Integer.parseInt(musicList.get(position).getAlbumArt()), 200);
+            if(albumImg != null){
+                customViewHolder.albumArt.setImageBitmap(albumImg);
+            }
+        }else{
+            customViewHolder.albumArt.setImageBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.album));
         }
 
         // recyclerviewer에 보여줘야할 정보 세팅
         customViewHolder.title.setText(musicList.get(position).getTitle());
         customViewHolder.artist.setText(musicList.get(position).getArtist());
-        customViewHolder.duration.setText(sdf.format(Integer.parseInt(musicList.get(position).getDuration())));
+        if(musicList.get(position).getDuration() != null){
+            customViewHolder.duration.setText(sdf.format(Integer.parseInt(musicList.get(position).getDuration())));
+        }else{
+            customViewHolder.duration.setText("04:12");
+        }
+
+        Log.d("MusicAdapter", "error");
     }
 
     //앨범아트를 content provider로 가져오는 함수

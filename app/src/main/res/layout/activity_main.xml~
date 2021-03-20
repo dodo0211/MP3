@@ -27,6 +27,9 @@
             android:layout_gravity="bottom"
             tools:ignore="MissingClass" />
 
+        <include layout="@layout/fragment01"/>
+        <include layout="@layout/fragment02"/>
+        <include layout="@layout/fragment03"/>
 
     </FrameLayout>
 
