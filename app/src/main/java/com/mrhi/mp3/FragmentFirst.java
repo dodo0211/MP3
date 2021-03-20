@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment;
 
 public class FragmentFirst extends Fragment {
     private int fragNumber;
-    private TextView tvName1;
 
     public static FragmentFirst newInstance(int fragNumber){
         FragmentFirst fragmentFirst = new FragmentFirst();
@@ -40,8 +39,6 @@ public class FragmentFirst extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstancdState){
         super.onViewCreated(view,savedInstancdState);
-//        tvName1 = (TextView) view.findViewById(R.id.tvName1);
-//        tvName1.setText("Page " + fragNumber);
     }
 
     @Override

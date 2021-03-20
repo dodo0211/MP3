@@ -2,10 +2,14 @@ package com.mrhi.mp3;
 
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,18 +21,18 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import static android.content.Context.MODE_PRIVATE;
+import static com.mrhi.mp3.MainActivity.viewPager2;
+
 public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.CustomViewHolder> {
     private Context context;
     private ArrayList<MusicData> musicList;
-
-    //2-2. 내부 인터페이스 멤버변수 생성
-    //리스너 객체 참조를 저장하는 변수
-    private OnItemClickListener mListener = null;
 
     //2. 생성자 생성
     public MusicAdapter(Context context, ArrayList<MusicData> musicList) {
@@ -164,23 +168,52 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.CustomViewHo
                 public void onClick(View view) {
                     int position = getAdapterPosition();
                     if(position != RecyclerView.NO_POSITION);{
-                        mListener.onItemClick(view, position);
+//                        mListener.onItemClick(view, position);
                     }
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString("title", title.getText().toString());
+
+                    //넘겨줄 값 저장
+                    //SharedPreferences: 임시파일
+                    SharedPreferences.Editor editor = context.getSharedPreferences("test", MODE_PRIVATE).edit();
+                    Log.d("debug", "title: "+title.getText().toString());
+
+                    //기존의 것을 지움
+                    editor.clear();
+                    
+                    //editor.putString("id", id.getText().toString());
+                    editor.putString("artist", artist.getText().toString());
+                    editor.putString("title", title.getText().toString());
+
+
+                    albumArt.buildDrawingCache();
+                    Bitmap bmap = albumArt.getDrawingCache();
+                    String imgString = getEncoded64ImageStringFromBitmap(bmap);
+
+                    editor.putString("albumArt", imgString);
+                    editor.putString("duration", duration.getText().toString());
+                    //editor.putInt("liked", liked);
+                    editor.apply();
+                    
+                    //넘겨주는 수단
+                    viewPager2.setCurrentItem(3);
+
                 }
+
             });//end of setOnClickListener
         }
     }//end of CustomViewHolderClass
 
-    //2-1. 내부 인터페이스를 정의한다.
-    public interface OnItemClickListener{
-        //추상화메소드 구현
-        void onItemClick(View view , int position);
+    //사진을 Bitmap를 String으로 바꿔주는
+    public String getEncoded64ImageStringFromBitmap(Bitmap bitmap) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 70, stream);
+        byte[] byteFormat = stream.toByteArray();
+        // get the base 64 string
+        String imgString = Base64.encodeToString(byteFormat, Base64.NO_WRAP);
 
-    }//end of InItemClickListener
-
-    //2-3. 내부 인터페이스 멤버변수에 대한 setter 생성
-    public void setOnItemClickListener(OnItemClickListener listener){
-        this.mListener = listener;
+        return imgString;
     }
 
 }//end of MusicAdapterClass

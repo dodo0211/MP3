@@ -22,7 +22,6 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class FragmentThird extends Fragment {
     private int fragNumber;
-    private TextView tvName3;
     private RecyclerView recyclerList;
     private MusicAdapter musicAdapter;
     private ArrayList<MusicData> sdCardList = new ArrayList<MusicData>();
@@ -39,7 +38,6 @@ public class FragmentThird extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         fragNumber = getArguments().getInt("fragNumber",0);
-
 
     }
 
@@ -62,14 +60,12 @@ public class FragmentThird extends Fragment {
         findContentProviderMP3ToArrayList(view);
 
         return view;
-    }
+    }//end of onCreateView
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstancdState){
         super.onViewCreated(view,savedInstancdState);
-//        tvName3 = (TextView) view.findViewById(R.id.tvName3);
-//        tvName3.setText("Page " + fragNumber);
-    }
+    }//end of viewCreate
 
     @Override
     public void onStop() {
@@ -107,5 +103,6 @@ public class FragmentThird extends Fragment {
             }   // end of while
         }//end of if
     }//end of findContentProviderMP3ToArrayList
+
 
 }

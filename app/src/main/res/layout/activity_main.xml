@@ -27,7 +27,6 @@
             android:layout_gravity="bottom"
             tools:ignore="MissingClass" />
 
-
     </FrameLayout>
 
 </LinearLayout>

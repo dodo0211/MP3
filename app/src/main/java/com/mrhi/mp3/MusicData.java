@@ -15,8 +15,7 @@ public class MusicData {
     private int playCount;
     private int liked;
 
-    public MusicData(String id, String artist, String title, String albumArt,
-                     String duration) {
+    public MusicData(String id, String artist, String title, String albumArt, String duration) {
         this.id = id;
         this.artist = artist;
         this.title = title;

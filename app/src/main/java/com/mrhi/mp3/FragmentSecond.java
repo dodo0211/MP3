@@ -40,8 +40,6 @@ public class FragmentSecond extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstancdState){
         super.onViewCreated(view,savedInstancdState);
-//        tvName2 = (TextView) view.findViewById(R.id.tvName2);
-//        tvName2.setText("Page " + fragNumber);
     }
 
     @Override
