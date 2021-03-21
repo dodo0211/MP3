@@ -62,13 +62,12 @@
                 android:id="@+id/tvTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:gravity="center"
                 android:padding="10dp"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
                 android:text="음악이름"
-                android:textSize="23sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -79,7 +78,7 @@
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
                 android:text="가수이름"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
         </LinearLayout>
 

@@ -28,6 +28,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -54,6 +55,7 @@ public class FragmentFourth extends Fragment implements View.OnClickListener {
     private int index;
     private ArrayList<MusicData> likeArrayList = new ArrayList<>();
     private MusicAdapter musicAdapter;
+    private MusicData musicData;
 
     private boolean flag = false;
 
@@ -74,10 +76,6 @@ public class FragmentFourth extends Fragment implements View.OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-
-
     }
 
     //fragment 생명주기를 유의
@@ -111,7 +109,6 @@ public class FragmentFourth extends Fragment implements View.OnClickListener {
             ivAlbum.setImageResource(R.drawable.album);
         }
 
-
     }
 
 
@@ -138,19 +135,6 @@ public class FragmentFourth extends Fragment implements View.OnClickListener {
         // 뷰 아이디
         initializeView(view);
 
-//        ibPlay.setOnClickListener(v ->{
-//            mediaPlayer = new MediaPlayer();
-//            MusicData musicData = sdCardList.get(selectPosition);
-//            Uri musicUri = Uri.withAppendedPath(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, musicData.getId());
-//
-//            mediaPlayer.setDataSource(MainActivity.this, musicUri);
-//            mediaPlayer.prepare();
-//            mediaPlayer.start();
-//
-//            ibPlay.setEnabled(false);
-//            ibPause.setEnabled(true);
-//            btnStop.setEnabled(true);
-//
 //            //시크바도 같이 움직여야 함
 //            Thread thread = new Thread() {
 //                @Override
@@ -284,23 +268,23 @@ public class FragmentFourth extends Fragment implements View.OnClickListener {
 //                    Log.d("ibNext",e.getMessage());
 //                }
 //                break;
-//            case R.id.ibLike :
-//
-//                if(ibLike.isActivated()){
-//                    ibLike.setActivated(false);
-//                    musicData.setLiked(0);
-//                    likeArrayList.remove(musicData);
-//                    musicAdapter.notifyDataSetChanged();
-//                    Toast.makeText(mainActivity, "좋아요 취소!!", Toast.LENGTH_SHORT).show();
-//
-//                }else{
-//                    ibLike.setActivated(true);
-//                    musicData.setLiked(1);
-//                    likeArrayList.add(musicData);
-//                    musicAdapter.notifyDataSetChanged();
-//                    Toast.makeText(mainActivity, "좋아요!!", Toast.LENGTH_SHORT).show();
-//                }
-//                break;
+            case R.id.ibLike :
+
+                if(ibLike.isActivated()){
+                    ibLike.setActivated(false);
+                    musicData.setLiked(0);
+                    likeArrayList.remove(musicData);
+                    musicAdapter.notifyDataSetChanged();
+                    Toast.makeText(mainActivity, "좋아요 취소!!", Toast.LENGTH_SHORT).show();
+
+                }else{
+                    ibLike.setActivated(true);
+                    musicData.setLiked(1);
+                    likeArrayList.add(musicData);
+                    musicAdapter.notifyDataSetChanged();
+                    Toast.makeText(mainActivity, "좋아요!!", Toast.LENGTH_SHORT).show();
+                }
+                break;
             default:break;
         }
 
@@ -373,8 +357,6 @@ public class FragmentFourth extends Fragment implements View.OnClickListener {
         btnStop = view.findViewById(R.id.btnStop);
 
     }//end of findIDFunc
-
-
 
 
 }

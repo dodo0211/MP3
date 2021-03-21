@@ -27,7 +27,7 @@
             android:paddingLeft="10dp"
             android:paddingBottom="2dp"
             android:text="음악이름"
-            android:textSize="17sp"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
         <TextView
@@ -38,7 +38,7 @@
             android:maxLines="1"
             android:paddingLeft="10dp"
             android:text="가수이름"
-            android:textSize="14sp" />
+            android:textSize="12sp" />
     </LinearLayout>
 
     <LinearLayout

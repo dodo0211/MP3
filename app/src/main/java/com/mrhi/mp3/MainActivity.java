@@ -114,8 +114,8 @@ public class MainActivity extends AppCompatActivity {
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE}, MODE_PRIVATE);
 
-
-
     }//end of onCreate
+
+
 
 }//end of class
