@@ -32,7 +32,8 @@ import static com.mrhi.mp3.MainActivity.viewPager2;
 
 public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.CustomViewHolder> {
     private Context context;
-    private ArrayList<MusicData> musicList;
+    public static ArrayList<MusicData> musicList;
+    public static int selectedPosition;
 
     //2. 생성자 생성
     public MusicAdapter(Context context, ArrayList<MusicData> musicList) {
@@ -80,7 +81,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.CustomViewHo
     }
 
     //앨범아트를 content provider로 가져오는 함수
-    public Bitmap getAlbumImg(Context context, int albumArt, int imgMaxSize) {
+    public static Bitmap getAlbumImg(Context context, int albumArt, int imgMaxSize) {
             /*컨텐트프로바이더(Content Provider)는 앱 간의 데이터 공유를 위해 사용됨.
                 특정 앱이 다른 앱의 데이터를 직접 접근해서 사용할 수 없기 때문에
                 무조건 컨텐트프로바이더를 통해 다른 앱의 데이터를 사용해야만 한다.
@@ -166,39 +167,10 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.CustomViewHo
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    int position = getAdapterPosition();
-                    if(position != RecyclerView.NO_POSITION);{
-//                        mListener.onItemClick(view, position);
-                    }
+                    selectedPosition = getAdapterPosition();
 
-                    Bundle bundle = new Bundle();
-                    bundle.putString("title", title.getText().toString());
-
-                    //넘겨줄 값 저장
-                    //SharedPreferences: 임시파일
-                    SharedPreferences.Editor editor = context.getSharedPreferences("test", MODE_PRIVATE).edit();
-                    Log.d("debug", "title: "+title.getText().toString());
-
-                    //기존의 것을 지움
-                    editor.clear();
-                    
-                    //editor.putString("id", id.getText().toString());
-                    editor.putString("artist", artist.getText().toString());
-                    editor.putString("title", title.getText().toString());
-
-
-                    albumArt.buildDrawingCache();
-                    Bitmap bmap = albumArt.getDrawingCache();
-                    String imgString = getEncoded64ImageStringFromBitmap(bmap);
-
-                    editor.putString("albumArt", imgString);
-                    editor.putString("duration", duration.getText().toString());
-                    //editor.putInt("liked", liked);
-                    editor.apply();
-                    
                     //넘겨주는 수단
                     viewPager2.setCurrentItem(3);
-
                 }
 
             });//end of setOnClickListener

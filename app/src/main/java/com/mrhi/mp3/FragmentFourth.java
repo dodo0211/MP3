@@ -33,8 +33,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import static android.content.Context.MODE_PRIVATE;
+import static com.mrhi.mp3.MusicAdapter.getAlbumImg;
+import static com.mrhi.mp3.MusicAdapter.selectedPosition;
 
-public class FragmentFourth extends Fragment implements View.OnClickListener {
+public class FragmentFourth extends Fragment {
     private int fragNumber;
     private ImageView ivAlbum;
     private TextView tvPlayCount, tvTitle, tvArtist;
@@ -44,6 +46,8 @@ public class FragmentFourth extends Fragment implements View.OnClickListener {
     private TextView tvDuration;
     private ImageButton ibPrevious, ibPause, ibPlay, ibNext;
     private Button btnStop;
+
+    private int position;
 
     ///////////////////////////////////////////////////
 
@@ -78,30 +82,23 @@ public class FragmentFourth extends Fragment implements View.OnClickListener {
         super.onCreate(savedInstanceState);
     }
 
-    //fragment 생명주기를 유의
     @Override
     public void onResume() {
         super.onResume();
 
-        SharedPreferences prefs = getContext().getSharedPreferences("test", MODE_PRIVATE);
-        //"No name defined" is the default value.
-        String artist = prefs.getString("artist", "No name defined");
-        String title = prefs.getString("title", "No name defined");
-        String albumArt = prefs.getString("albumArt", "No name defined");
-        String duration = prefs.getString("duration", "No name defined");
+        musicData = MusicAdapter.musicList.get(MusicAdapter.selectedPosition);
 
-        Log.d("debug", "titleTest "+title);
-        Log.d("debug", "artistTest "+artist);
-        Log.d("debug", "albumArt "+albumArt);
-        Log.d("debug", "durationTest "+duration);
+        tvTitle.setText(musicData.getTitle());
+        tvArtist.setText(musicData.getArtist());
+        tvDuration.setText(musicData.getDuration());
 
-        tvTitle.setText(title);
-        tvArtist.setText(artist);
-        tvDuration.setText(duration);
-
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////
         // 앨범 이미지 세팅
-        byte[] decodedString = Base64.decode(albumArt.getBytes(), Base64.DEFAULT);
-        Bitmap albumImg = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        byte[] decodedString = Base64.decode(musicData.getAlbumArt().getBytes(), Base64.DEFAULT);
+        Bitmap albumImg = getAlbumImg(getContext(), Integer.parseInt(musicData.getAlbumArt()), 200);
 
         if(albumImg != null){
             ivAlbum.setImageBitmap(albumImg);
@@ -110,7 +107,6 @@ public class FragmentFourth extends Fragment implements View.OnClickListener {
         }
 
     }
-
 
     //프래그먼트가 엑티비트와 연결되어 있었던 경우 호출
     @Override
@@ -134,6 +130,30 @@ public class FragmentFourth extends Fragment implements View.OnClickListener {
 
         // 뷰 아이디
         initializeView(view);
+
+        ibPlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    mediaPlayer = new MediaPlayer();
+                    MusicData musicData = sdCardList.get(selectedPosition);
+                    Uri musicUri = Uri.withAppendedPath(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, musicData.getId());
+                    mediaPlayer.setDataSource(getContext(), musicUri);
+                    mediaPlayer.prepare();
+                    mediaPlayer.start();
+
+                    ibPlay.setEnabled(false);
+                    ibPause.setEnabled(true);
+                    btnStop.setEnabled(true);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }catch (Exception s){
+                    s.printStackTrace();
+                }
+            }
+        });
+
+
 
 //            //시크바도 같이 움직여야 함
 //            Thread thread = new Thread() {
@@ -219,76 +239,6 @@ public class FragmentFourth extends Fragment implements View.OnClickListener {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstancdState){
         super.onViewCreated(view,savedInstancdState);
     }
-
-    ///////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.ibPlay :
-                if(ibPlay.isActivated()){
-                    mediaPlayer.pause();
-                    ibPlay.setActivated(false);
-                }else{
-                    mediaPlayer.start();
-
-                    setSeekBarThread();
-                }
-                break;
-//            case R.id.ibPrevious :
-//                mediaPlayer.stop();
-//                mediaPlayer.reset();
-//                try {
-//                    if(index == 0){
-//                        index = mainActivity.getMusicDataArrayList().size();
-//                    }
-//                    index--;
-//                    setPlayerData(index, true);
-//
-//                } catch (Exception e) {
-//                    Log.d("ubPrevious",e.getMessage());
-//                }
-//                break;
-//            case R.id.ibNext :
-//                try {
-//                    mediaPlayer.stop();
-//                    mediaPlayer.reset();
-//                    if(index == mainActivity.getMusicDataArrayList().size()-1){
-//                        index= -1;
-//                    }
-//                    index++;
-//                    setPlayerData(index, true);
-//
-//                } catch (Exception e) {
-//                    Log.d("ibNext",e.getMessage());
-//                }
-//                break;
-            case R.id.ibLike :
-
-                if(ibLike.isActivated()){
-                    ibLike.setActivated(false);
-                    musicData.setLiked(0);
-                    likeArrayList.remove(musicData);
-                    musicAdapter.notifyDataSetChanged();
-                    Toast.makeText(mainActivity, "좋아요 취소!!", Toast.LENGTH_SHORT).show();
-
-                }else{
-                    ibLike.setActivated(true);
-                    musicData.setLiked(1);
-                    likeArrayList.add(musicData);
-                    musicAdapter.notifyDataSetChanged();
-                    Toast.makeText(mainActivity, "좋아요!!", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            default:break;
-        }
-
-    }//end of onClick
 
     //시크바 변경에 관한 함수
     private void seekBarChangeMethod() {
