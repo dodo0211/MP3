@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,18 +53,14 @@ public class FragmentFirst extends Fragment {
 
         LinearLayoutManager linearLayoutManager
                 = new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false);
+
         recyclerChart.setLayoutManager(linearLayoutManager);
 
-        ////////////////////////////////////////////////////////////////////////
-        ////////////////////////////////////////////////////////////////////////
-        ////////////////////////////////////////////////////////////////////////
-        ////////////////////////////////////////////////////////////////////////
-        ////////////////////////////////////////////////////////////////////////
-//        chartAdapter = new ChartAdapter();  //이건 안해도 될것 같은데
+        chartAdapter = new ChartAdapter();  //이건 안해도 될것 같은데
         recyclerChart.setAdapter(chartAdapter);
 
-        ////////////////////////////////////////////////////////////////////////
-        //원래는 return getData()여야 하는데 어떡한담
+        getData();
+
         return view;
     }//end of onCreateView
 
@@ -116,6 +113,7 @@ public class FragmentFirst extends Fragment {
                         // 이미지정보
                         for (Element element : image_list1) {
                             listUrl.add(element.attr("src"));
+                            Log.d("jsoup", "jsoup");
                         }
 
                         for (int i = 0; i < 30; i++) {
