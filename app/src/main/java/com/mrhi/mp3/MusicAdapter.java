@@ -2,23 +2,21 @@ package com.mrhi.mp3;
 
 import android.content.ContentResolver;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
-import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.ByteArrayOutputStream;
@@ -27,18 +25,22 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-import static android.content.Context.MODE_PRIVATE;
 import static com.mrhi.mp3.MainActivity.viewPager2;
 
 public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.CustomViewHolder> {
     private Context context;
     public static ArrayList<MusicData> musicList;
     public static int selectedPosition;
+    public static boolean likeFlag = false;
 
     //2. 생성자 생성
     public MusicAdapter(Context context, ArrayList<MusicData> musicList) {
         this.context = context;
         this.musicList = musicList;
+    }
+
+    public static MusicData getSelectedMusic(){
+        return musicList.get(selectedPosition);
     }
 
     @NonNull
@@ -52,32 +54,40 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.CustomViewHo
         return viewHolder;
     }
 
-    //데이터를 제공하는 것
+    //데이터를 제공
     @Override
     public void onBindViewHolder(@NonNull CustomViewHolder customViewHolder, int position) {
         //음악의 전체 재생시간
-        SimpleDateFormat sdf = new SimpleDateFormat("mm:ss");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("mm:ss");
+
+        MusicData musicData = musicList.get(position);
 
         //앨범자켓을 비트맵으로 만들기
-        if(musicList.get(position).getAlbumArt() != null){
-            Bitmap albumImg = getAlbumImg(context, Integer.parseInt(musicList.get(position).getAlbumArt()), 200);
-            if(albumImg != null){
+        if (musicData.getAlbumArt() != null) {
+            Bitmap albumImg = getAlbumImg(context, Integer.parseInt(musicData.getAlbumArt()), 200);
+            if (albumImg != null) {
                 customViewHolder.albumArt.setImageBitmap(albumImg);
             }
-        }else{
+        } else {
             customViewHolder.albumArt.setImageBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.album));
         }
 
         // recyclerviewer에 보여줘야할 정보 세팅
-        customViewHolder.title.setText(musicList.get(position).getTitle());
-        customViewHolder.artist.setText(musicList.get(position).getArtist());
-        if(musicList.get(position).getDuration() != null){
-            customViewHolder.duration.setText(sdf.format(Integer.parseInt(musicList.get(position).getDuration())));
-        }else{
+        customViewHolder.title.setText(musicData.getTitle());
+        customViewHolder.artist.setText(musicData.getArtist());
+        if (musicData.getDuration() != 0) {
+            customViewHolder.duration.setText(simpleDateFormat.format(musicData.getDuration()));
+        } else {
             customViewHolder.duration.setText("04:12");
         }
 
         Log.d("MusicAdapter", "error");
+
+        if (true == likeFlag && musicData.getLiked() == false) {
+            customViewHolder.linearLayout.setVisibility(View.GONE);
+        } else {
+            customViewHolder.linearLayout.setVisibility(View.VISIBLE);
+        }
     }
 
     //앨범아트를 content provider로 가져오는 함수
@@ -149,15 +159,17 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.CustomViewHo
         return (musicList != null)? musicList.size() : 0;
     }
 
-    //1. 내부클래스 뷰홀더를 만든다.
+    //1. 내부클래스 뷰홀더를 생성
     //값만 바꿔서 밑으로 보냄 어차피 화면에는 한정적으로 보이니까
     public class CustomViewHolder extends RecyclerView.ViewHolder {
+        private LinearLayout linearLayout;
         private ImageView albumArt;
         private TextView title, artist, duration;
 
         public CustomViewHolder(@NonNull View itemView) {   //밑으로 내려서 사라진 뷰가 itemView로 옴
             super(itemView);
 
+            this.linearLayout = itemView.findViewById(R.id.linearLayout);
             this.albumArt = itemView.findViewById(R.id.d_ivAlbum);
             this.title = itemView.findViewById(R.id.d_tvTitle);
             this.artist = itemView.findViewById(R.id.d_tvArtist);
@@ -170,9 +182,8 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.CustomViewHo
                     selectedPosition = getAdapterPosition();
 
                     //넘겨주는 수단
-                    viewPager2.setCurrentItem(3);
+                    viewPager2.setCurrentItem(2);
                 }
-
             });//end of setOnClickListener
         }
     }//end of CustomViewHolderClass

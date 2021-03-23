@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -74,12 +73,6 @@ public class FragmentFirst extends Fragment {
         super.onStop();
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////
-
     private void getData() {
         MelonJsoup jsoupAsyncTask = new MelonJsoup();
         jsoupAsyncTask.execute();
@@ -95,9 +88,9 @@ public class FragmentFirst extends Fragment {
             try {
                 Document doc = Jsoup.connect(melon_chart_url).get();
                 final Elements rank_list1 = doc.select("div.wrap_song_info div.ellipsis.rank01 span a");
-                final Elements rank_list_name = doc.select("div.wrap_song_info div.ellipsis.rank02 span a");
+                final Elements rank_list_name = doc.select("div.wrap_song_info div.ellipsis.rank02");
 
-                final Elements image_list1 = doc.select("tr#lst50.lst50 div.wrap a.image_typeAll img");
+                final Elements image_list1 = doc.select("div.wrap a.image_typeAll img");
                 Handler handler = new Handler(Looper.getMainLooper()); // 객체생성
                 handler.post(new Runnable() {
                     @Override
@@ -116,19 +109,27 @@ public class FragmentFirst extends Fragment {
                             Log.d("jsoup", "jsoup");
                         }
 
-                        for (int i = 0; i < 30; i++) {
+                        for (int i = 0; i < 100; i++) {
                             ChartData data = new ChartData();
-                            data.setTitle(listTitle.get(i));
-                            data.setImageUrl(listUrl.get(i));
+                            if(listTitle.size() != 0){
+                                data.setTitle(listTitle.get(i));
+                            }
+
+                            if(listUrl.size() != 0){
+                                data.setImageUrl(listUrl.get(i));
+                            }
+
+                            if(listName.size() != 0){
+                                data.setName(listName.get(i).substring(0,listName.get(i).length()/2));
+                            }
+
                             data.setRankNum(String.valueOf(i + 1));
-                            data.setName(listName.get(i));
 
                             chartAdapter.addItem(data);
                         }
                         chartAdapter.notifyDataSetChanged();
                     }
                 });
-
 
             } catch (IOException e) {
                 e.printStackTrace();

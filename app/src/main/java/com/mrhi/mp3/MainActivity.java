@@ -2,30 +2,11 @@ package com.mrhi.mp3;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.Manifest;
-import android.database.Cursor;
-import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.SystemClock;
-import android.provider.MediaStore;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ProgressBar;
-import android.widget.SeekBar;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 
 import me.relex.circleindicator.CircleIndicator3;
 
@@ -33,33 +14,15 @@ public class MainActivity extends AppCompatActivity {
     //viewPager에 필요한
     public static ViewPager2 viewPager2;
     private FragmentStateAdapter pagerAdapter;
-    private int numberPage = 4;
+    private int numberPage = 3;
     private CircleIndicator3 indicator;
-    
-    //////////////////////////////////////////////////////////////////////////////////////////
 
     private String id;
     private String artist;
     private String title;
     private String albumArt;
     private String duration;
-    private int playCount;
     private int liked;
-
-    //////////////////////////////////////////////////////////////////////////////////////////
-
-    private ArrayList<MusicData> sdCardList = new ArrayList<MusicData>();
-
-    private MediaPlayer mPlayer;
-
-    //노래의 현재 위치
-    private int selectPosition;
-
-    private MusicAdapter musicAdapter;
-
-    private boolean flag = false;
-
-    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("mm:ss");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,17 +68,10 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
-        final float pageMargin = getResources().getDimensionPixelOffset(R.dimen.pageMargin);
-        final float pageOffset = getResources().getDimensionPixelOffset(R.dimen.offset);
-
-        ///////////////////////////////////////////////////////////////////////////////////////
-
         //sdCard를 사용하는 앱이기 때문에 권한설정
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE}, MODE_PRIVATE);
 
     }//end of onCreate
-
-
 
 }//end of class

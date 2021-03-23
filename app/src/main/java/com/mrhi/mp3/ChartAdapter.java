@@ -14,9 +14,6 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 
 public class ChartAdapter extends RecyclerView.Adapter<ChartAdapter.ItemViewHolder> {
-    private TextView txt_ranktNum, txt_chartName, txt_chartTitle;
-    private ImageView img_chart;
-
     private ArrayList<ChartData> listData = new ArrayList<>();
 
     @NonNull
@@ -44,6 +41,8 @@ public class ChartAdapter extends RecyclerView.Adapter<ChartAdapter.ItemViewHold
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
+        private TextView txt_ranktNum, txt_chartName, txt_chartTitle;
+        private ImageView img_chart;
 
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);

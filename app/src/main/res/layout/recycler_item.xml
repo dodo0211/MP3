@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="80dp"
     android:gravity="center_vertical"
@@ -9,42 +10,61 @@
         android:id="@+id/d_ivAlbum"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="10dp"
         android:src="@drawable/album_default" />
 
+
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/d_tvTitle"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:paddingLeft="10dp"
-            android:paddingBottom="2dp"
-            android:text="음악이름"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/d_tvArtist"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:paddingLeft="10dp"
-            android:text="가수이름"
-            android:textSize="12sp" />
+            <TextView
+                android:id="@+id/d_tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:paddingLeft="10dp"
+                android:paddingBottom="2dp"
+                android:text="음악이름"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/d_tvArtist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:paddingLeft="10dp"
+                android:text="가수이름"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/ibLike"
+            android:layout_weight="7"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#fafafa"
+            android:src="@drawable/like_button"/>
+
+
     </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="20dp">
+        android:layout_marginRight="10dp">
 
         <TextView
             android:id="@+id/d_tvDuration"

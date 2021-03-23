@@ -11,11 +11,10 @@ public class MusicData {
     private String artist;
     private String title;
     private String albumArt;
-    private String duration;
-    private int playCount;
-    private int liked;
+    private int duration;
+    private boolean liked;
 
-    public MusicData(String id, String artist, String title, String albumArt, String duration) {
+    public MusicData(String id, String artist, String title, String albumArt, int duration) {
         this.id = id;
         this.artist = artist;
         this.title = title;
@@ -24,13 +23,12 @@ public class MusicData {
     }
 
     public MusicData(String id, String artist, String title, String albumArt,
-                     String duration, int playCount, int liked) {
+                     int duration, boolean liked) {
         this.id = id;
         this.artist = artist;
         this.title = title;
         this.albumArt = albumArt;
         this.duration = duration;
-        this.playCount = playCount;
         this.liked = liked;
     }
 
@@ -39,18 +37,16 @@ public class MusicData {
     public String getArtist() {return artist;}
     public String getTitle() {return title;}
     public String getAlbumArt() {return albumArt;}
-    public String getDuration() {return duration;}
-    public int getPlayCount() {return playCount;}
-    public int getLiked() {return liked;}
+    public int getDuration() {return duration;}
+    public boolean getLiked() {return liked;}
 
     //setter
     public void setId(String id) {this.id = id;}
     public void setArtist(String artist) {this.artist = artist;}
     public void setTitle(String title) {this.title = title;}
     public void setAlbumArt(String albumArt) {this.albumArt = albumArt;}
-    public void setDuration(String duration) {this.duration = duration;}
-    public void setPlayCount(int playCount) {this.playCount = playCount;}
-    public void setLiked(int liked) {this.liked = liked;}
+    public void setDuration(int duration) {this.duration = duration;}
+    public void setLiked(boolean liked) {this.liked = liked;}
 
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)

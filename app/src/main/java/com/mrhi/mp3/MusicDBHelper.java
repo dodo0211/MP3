@@ -39,7 +39,6 @@ public class MusicDBHelper extends SQLiteOpenHelper {
                         "title VARCHAR(15)," +
                         "albumArt VARCHAR(15)," +
                         "duration VARCHAR(15)," +
-                        "click INTEGER," +
                         "liked INTEGER );");
     }//end of onCreate
 
@@ -66,9 +65,8 @@ public class MusicDBHelper extends SQLiteOpenHelper {
                     cursor.getString(1),
                     cursor.getString(2),
                     cursor.getString(3),
-                    cursor.getString(4),
-                    cursor.getInt(5),
-                    cursor.getInt(6));
+                    cursor.getInt(4),
+                    cursor.getInt(5)!=0);
 
             musicDataArrayList.add(musicData);
         }//end of while
@@ -119,7 +117,7 @@ public class MusicDBHelper extends SQLiteOpenHelper {
 
         try{
             for(MusicData data : arrayList){
-                String query = "UPDATE musicTBL SET click = " + data.getPlayCount() + ", liked = " + data.getLiked() + " WHERE id = '" + data.getId() + "';";
+                String query = "UPDATE musicTBL SET liked = " + data.getLiked() + " WHERE id = '" + data.getId() + "';";
                 sqLiteDatabase.execSQL(query);
             }
         }catch (Exception e){
@@ -142,9 +140,6 @@ public class MusicDBHelper extends SQLiteOpenHelper {
                 MediaStore.Audio.Media.ALBUM_ID,
                 MediaStore.Audio.Media.DURATION};
 
-        // 특정 폴더에서 음악 가져오기
-//        String selection = MediaStore.Audio.Media.DATA + " like ? ";
-//        String selectionArqs = new String[]{"%MusicList%"}
 
         // 전체 영역에서 음악 가져오기
         Cursor cursor = context.getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
@@ -158,9 +153,9 @@ public class MusicDBHelper extends SQLiteOpenHelper {
                 String artist = cursor.getString(cursor.getColumnIndex(data[1]));
                 String title = cursor.getString(cursor.getColumnIndex(data[2]));
                 String albumArt = cursor.getString(cursor.getColumnIndex(data[3]));
-                String duration = cursor.getString(cursor.getColumnIndex(data[4]));
+                int duration = cursor.getInt(cursor.getColumnIndex(data[4]));
 
-                MusicData mData = new MusicData(id, artist, title, albumArt, duration, 0, 0);
+                MusicData mData = new MusicData(id, artist, title, albumArt, duration, false);
 
                 sdCardList.add(mData);
             }//end of while
@@ -183,9 +178,8 @@ public class MusicDBHelper extends SQLiteOpenHelper {
                     cursor.getString(1),
                     cursor.getString(2),
                     cursor.getString(3),
-                    cursor.getString(4),
-                    cursor.getInt(5),
-                    cursor.getInt(6));
+                    cursor.getInt(4),
+                    cursor.getInt(5) != 0);
 
             musicDataArrayList.add(musicData);
         }//end of while
@@ -225,6 +219,5 @@ public class MusicDBHelper extends SQLiteOpenHelper {
         return dbList;
 
     }//end of compareArrayList
-
 
 }//end of class

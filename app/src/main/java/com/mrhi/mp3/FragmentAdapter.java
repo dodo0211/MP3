@@ -5,13 +5,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.mrhi.mp3.FragmentFirst;
-import com.mrhi.mp3.FragmentFourth;
-import com.mrhi.mp3.FragmentSecond;
-import com.mrhi.mp3.FragmentThird;
-
 
 public class FragmentAdapter extends FragmentStateAdapter {
+
     private int count;
 
     public FragmentAdapter(@NonNull FragmentActivity fragmentActivity, int count) {
@@ -26,7 +22,6 @@ public class FragmentAdapter extends FragmentStateAdapter {
 
         if(index==0) return FragmentFirst.newInstance(index+1);
         else if(index==1) return FragmentSecond.newInstance(index+1);
-        else if(index==2) return FragmentThird.newInstance(index+1);
         else return FragmentFourth.newInstance(index+1);
     }
 
