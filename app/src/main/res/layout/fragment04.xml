@@ -157,16 +157,16 @@
                 android:background="#FFFFFF"
                 android:padding="20dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/btn_play" />
+                android:src="@drawable/play" />
 
-            <Button
-                android:id="@+id/btnStop"
+            <ImageButton
+                android:id="@+id/ibStop"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="20dp"
                 android:padding="20dp"
-                android:background="@drawable/ic_launcher_background"/>
+                android:background="@drawable/stop"/>
 
             <ImageButton
                 android:id="@+id/ibNext"

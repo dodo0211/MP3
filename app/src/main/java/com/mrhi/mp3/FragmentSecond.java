@@ -63,6 +63,12 @@ public class FragmentSecond extends Fragment {
             public void onClick(View view) {
                 recyclerList.getAdapter().notifyItemRangeChanged(0, MusicAdapter.musicList.size());
                 MusicAdapter.likeFlag = !MusicAdapter.likeFlag;
+
+                if(toolbarLike.isActivated() == false){
+                    toolbarLike.setActivated(true);
+                }else{
+                    toolbarLike.setActivated(false);
+                }
             }
         });
 

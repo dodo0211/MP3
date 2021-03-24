@@ -34,8 +34,7 @@ public class FragmentFourth extends Fragment {
     private TextView tvCurrentTime;
     private SeekBar seekBar;
     private TextView tvDuration;
-    private ImageButton ibPrevious, ibPause, ibPlay, ibNext;
-    private Button btnStop;
+    private ImageButton ibPrevious, ibPause, ibPlay, ibNext, ibStop;
 
     private MediaPlayer mediaPlayer = new MediaPlayer();
 
@@ -111,7 +110,7 @@ public class FragmentFourth extends Fragment {
 
                     ibPlay.setEnabled(false);
                     ibPause.setEnabled(true);
-                    btnStop.setEnabled(true);
+                    ibStop.setEnabled(true);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }catch (Exception s){
@@ -146,19 +145,22 @@ public class FragmentFourth extends Fragment {
 
                 ibPlay.setEnabled(true);
                 ibPause.setEnabled(false);
-                btnStop.setEnabled(true);
+                ibStop.setEnabled(true);
             }
         });//end of ibPause
 
-        btnStop.setOnClickListener(new View.OnClickListener() {
+        ibStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mediaPlayer.reset();
-                mediaPlayer.stop();
+
+                if(mediaPlayer.isPlaying() == true){
+                    mediaPlayer.stop();
+                }
 
                 ibPlay.setEnabled(true);
                 ibPause.setEnabled(false);
-                btnStop.setEnabled(true);
+                ibStop.setEnabled(true);
             }
         });//end of btnStop
 
@@ -168,7 +170,11 @@ public class FragmentFourth extends Fragment {
                 mediaPlayer.stop();
                 mediaPlayer.reset();
 
-                MusicAdapter.selectedPosition--;
+                if(MusicAdapter.selectedPosition == 0){
+                    MusicAdapter.selectedPosition = MusicAdapter.musicList.size()-1;
+                }else{
+                    MusicAdapter.selectedPosition--;
+                }
 
                 initUI();
             }
@@ -180,7 +186,11 @@ public class FragmentFourth extends Fragment {
                 mediaPlayer.stop();
                 mediaPlayer.reset();
 
-                MusicAdapter.selectedPosition++;
+                if(MusicAdapter.selectedPosition == MusicAdapter.musicList.size()-1){
+                    MusicAdapter.selectedPosition = 0;
+                }else{
+                    MusicAdapter.selectedPosition++;
+                }
 
                 initUI();
             }
@@ -233,12 +243,11 @@ public class FragmentFourth extends Fragment {
             ivAlbum.setImageResource(R.drawable.album);
         }
 
-//        //좋아요
-//        if(musicData.getLiked() == 1){
-//            ibLike.setActivated(true);
-//        }else{
-//            ibLike.setActivated(false);
-//        }
+        if(musicData.getLiked() == false){
+            ibLike.setActivated(false);
+        }else{
+            ibLike.setActivated(true);
+        }
 
     }
 
@@ -255,7 +264,7 @@ public class FragmentFourth extends Fragment {
         ibPause = view.findViewById(R.id.ibPause);
         ibPlay = view.findViewById(R.id.ibPlay);
         ibNext = view.findViewById(R.id.ibNext);
-        btnStop = view.findViewById(R.id.btnStop);
+        ibStop = view.findViewById(R.id.ibStop);
     }//end of findIDFunc
 
     public static String secondsTommssFormat(int seconds) {
